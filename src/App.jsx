@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { intervalToDuration } from 'date-fns';
-import backgroundMusic from './assets/9e6a6eebec7be72.mp3';
+const backgroundMusic = '/assets/9e6a6eebec7be72.mp3';
 import { Heart, Sparkles, Camera, Star } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import InteractiveMap from './components/InteractiveMap';
@@ -52,8 +52,8 @@ const DecorativeMice = () => {
 
   useEffect(() => {
     const urls = [
-      '/src/assets/mouse1.png',
-      '/src/assets/mouse2.png'
+      '/assets/mouse1.png',
+      '/assets/mouse2.png'
     ];
 
     const interval = setInterval(() => {
@@ -134,7 +134,7 @@ const PhotoItem = ({ url, caption, rotation, onClick }) => (
     className="polaroid-card"
     onClick={onClick}
   >
-    <img src={url} alt={caption} loading="lazy" />
+    <img src={url} alt={caption} />
     <div className="polaroid-caption">{caption}</div>
   </motion.div>
 );
@@ -175,20 +175,17 @@ const photoCaptionsMap = {
   "20260108_144231": "Завершаем эту серию кадров любовью ❤️"
 };
 
-// Automatically import all images from the assets/photo directory
-const photoModules = import.meta.glob('/src/assets/photo/*.{jpg,jpeg,png,webp}', { eager: true });
-const videoModules = import.meta.glob('/src/assets/photo/*.{mp4,webm}', { eager: true });
+// Automatically generate photo list from the captions map (files are in public/assets/photo)
+const photos = Object.keys(photoCaptionsMap).map(id => ({
+  url: `/assets/photo/${id}.jpg`,
+  caption: photoCaptionsMap[id],
+  rotation: Math.random() * 8 - 4
+}));
+
+const videoFiles = ["20260108_144235.mp4", "20260109_144905.mp4"];
+const videoUrls = videoFiles.map(file => `/assets/photo/${file}`);
 
 const Gallery = ({ onOpen }) => {
-  const photos = Object.entries(photoModules).map(([path, module]) => {
-    const fileName = path.split('/').pop().split('.')[0];
-    return {
-      url: module.default,
-      caption: photoCaptionsMap[fileName] || "Наш милый момент ❤️",
-      rotation: Math.random() * 8 - 4
-    };
-  });
-
   return (
     <div className="photo-wall">
       {photos.map((it, i) => (
@@ -205,13 +202,12 @@ const Gallery = ({ onOpen }) => {
 };
 
 const VideoSection = ({ onOpen }) => {
-  const videos = Object.values(videoModules).map(mod => mod.default);
   const videoCaptions = [
     "Мы самая лучшая пара на свете.",
     "Мне говорят что моя девушка не котенок - также моя девушка"
   ];
 
-  if (videos.length === 0) return null;
+  if (videoUrls.length === 0) return null;
 
   return (
     <section className="container" style={{ marginTop: '100px' }}>
@@ -222,7 +218,7 @@ const VideoSection = ({ onOpen }) => {
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '40px' }}>
-        {videos.map((url, i) => {
+        {videoUrls.map((url, i) => {
           const caption = videoCaptions[i] || `Видео момент #${i + 1}`;
           return (
             <motion.div
@@ -240,7 +236,6 @@ const VideoSection = ({ onOpen }) => {
                   muted
                   loop
                   playsInline
-                  preload="metadata"
                   style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
               </div>
@@ -274,9 +269,9 @@ const Lightbox = ({ asset, onClose }) => {
           <Heart size={32} fill="white" />
         </button>
         {asset.type === 'image' ? (
-          <img src={asset.url} alt={asset.caption} loading="lazy" />
+          <img src={asset.url} alt={asset.caption} />
         ) : (
-          <video src={asset.url} controls autoPlay preload="metadata" />
+          <video src={asset.url} controls autoPlay />
         )}
         <p className="romantic-text" style={{ color: 'white', fontSize: '2.5rem', marginTop: '20px' }}>
           {asset.caption}

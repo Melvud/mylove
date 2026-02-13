@@ -117,7 +117,7 @@ const Flight = ({ from, to }) => {
 };
 
 const PhotoPolaroid = ({ fileName, folderName, position }) => {
-    const src = new URL(`../assets/photo/${folderName}/${fileName}`, import.meta.url).href;
+    const src = `/assets/photo/${folderName}/${fileName}`;
 
     return (
         <motion.div
