@@ -78,9 +78,6 @@ const DecorativeMice = () => {
     return () => clearInterval(interval);
   }, []);
 
-  useEffect(() => {
-    console.log("Checking assets: ", urls);
-  }, []);
 
   return (
     <div className="fixed inset-0 pointer-events-none" style={{ zIndex: -1 }}>
