@@ -78,20 +78,24 @@ const DecorativeMice = () => {
     return () => clearInterval(interval);
   }, []);
 
+  useEffect(() => {
+    console.log("Checking assets: ", urls);
+  }, []);
+
   return (
     <div className="fixed inset-0 pointer-events-none" style={{ zIndex: -1 }}>
       {mice.map(m => (
         <img
           key={m.id}
           src={m.url}
+          loading="eager"
           className="heart-particle" // Reuse the floating animation
           style={{
             left: `${m.left}%`,
             width: `${m.size}px`,
             animationDuration: `${m.duration}s`,
-            mixBlendMode: 'multiply',
-            opacity: 0.5,
-            filter: 'sepia(0.2) saturate(1.5)',
+            opacity: 0.8,
+            filter: 'drop-shadow(0 5px 15px rgba(0,0,0,0.1))',
             transform: `rotate(${m.rotationStart}deg)`
           }}
         />
@@ -322,7 +326,7 @@ function App() {
     <div className="app-root">
       <FloatingHearts />
       <DecorativeMice />
-      <audio id="bg-music" src={backgroundMusic} loop autoPlay style={{ display: 'none' }} />
+      <audio id="bg-music" src={backgroundMusic} loop preload="auto" style={{ display: 'none' }} />
 
       <AnimatePresence>
         {selectedAsset && (
