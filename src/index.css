@@ -1,0 +1,244 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;700&family=Quicksand:wght@300;400;500;600;700&display=swap');
+
+:root {
+  --primary-pink: #ff85a1;
+  --secondary-pink: #fbb1bd;
+  --soft-pink: #ffe5ec;
+  --dark-pink: #ff4d6d;
+  --white: #ffffff;
+  --glass: rgba(255, 255, 255, 0.7);
+  --glass-border: rgba(255, 255, 255, 0.9);
+  --shadow: 0 10px 30px rgba(255, 77, 109, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(135deg, #fff5f7 0%, #ffe5ec 100%);
+  background-attachment: fixed;
+  color: #4a4a4a;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+h1,
+h2,
+.romantic-text {
+  font-family: 'Dancing Script', cursive;
+}
+
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Custom Header */
+.hero {
+  padding: 100px 0 60px;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 6rem;
+  color: var(--dark-pink);
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 15px rgba(255, 77, 109, 0.1);
+}
+
+/* Timer Styling */
+.timer-grid {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+  margin-top: 40px;
+}
+
+.timer-box {
+  background: white;
+  min-width: 100px;
+  padding: 25px 15px;
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid var(--soft-pink);
+  transition: transform 0.3s ease;
+}
+
+.timer-box:hover {
+  transform: translateY(-5px);
+}
+
+.timer-val {
+  font-size: 2.8rem;
+  font-weight: 800;
+  color: var(--dark-pink);
+  line-height: 1;
+}
+
+.timer-unit {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--primary-pink);
+  margin-top: 10px;
+  font-weight: 700;
+}
+
+.timer-separator {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+}
+
+.timer-separator .dot {
+  width: 8px;
+  height: 8px;
+  background: var(--soft-pink);
+  border-radius: 50%;
+  margin: 5px 0;
+  box-shadow: 0 0 10px rgba(255, 133, 161, 0.3);
+}
+
+/* Polaroid Photo Wall */
+.photo-wall {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 50px;
+  padding: 80px 0;
+}
+
+.polaroid-card {
+  background: white;
+  padding: 20px 20px 60px 20px;
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.05);
+  border-radius: 3px;
+  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  cursor: pointer;
+  position: relative;
+}
+
+.polaroid-card img {
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 2px;
+}
+
+.polaroid-caption {
+  font-family: 'Dancing Script', cursive;
+  font-size: 2rem;
+  text-align: center;
+  padding-top: 20px;
+  color: #444;
+}
+
+.polaroid-card:hover {
+  transform: scale(1.05) rotate(0deg) !important;
+  box-shadow: 0 30px 60px rgba(255, 77, 109, 0.15);
+  z-index: 5;
+}
+
+/* Lightbox / Modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  backdrop-filter: blur(8px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+
+.modal-content {
+  max-width: 90vw;
+  max-height: 90vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: default;
+}
+
+.modal-content img,
+.modal-content video {
+  max-width: 100%;
+  max-height: 80vh;
+  border-radius: 8px;
+  box-shadow: 0 0 50px rgba(255, 133, 161, 0.3);
+}
+
+.modal-close {
+  position: absolute;
+  top: -40px;
+  right: -40px;
+  color: white;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 10px;
+}
+
+/* Decorative Background */
+.heart-particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: -1;
+  animation: float-up linear forwards;
+}
+
+@keyframes float-up {
+  0% {
+    transform: translateY(110vh) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 0.7;
+  }
+
+  90% {
+    opacity: 0.7;
+  }
+
+  100% {
+    transform: translateY(-10vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+/* Responsive */
+@media (max-width: 600px) {
+  .hero h1 {
+    font-size: 4rem;
+  }
+
+  .timer-val {
+    font-size: 1.8rem;
+  }
+
+  .timer-box {
+    min-width: 80px;
+    padding: 15px 5px;
+  }
+}
+
+.decorative-mouse {
+  filter: sepia(0.2) saturate(2) hue-rotate(-10deg);
+  pointer-events: none;
+  opacity: 0;
+  /* Will be animated by Framer Motion */
+  transition: opacity 0.3s ease;
+}
